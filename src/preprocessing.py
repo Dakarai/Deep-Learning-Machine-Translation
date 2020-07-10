@@ -1,10 +1,11 @@
 import numpy as np
 import re
+import os
 
 # Importing our translations
 # for example: "spa.txt" or "spa-eng/spa.txt"
-data_path = "YOUR-FILE-NAME-HERE.txt"
-
+data_path = "spa.txt"
+print(os.path.abspath("spa.txt"))
 # Defining lines as a list of each line
 with open(data_path, 'r', encoding='utf-8') as f:
     lines = f.read().split('\n')
@@ -18,7 +19,7 @@ target_tokens = set()
 
 # Adjust the number of lines so that
 # pre-processing doesn't take too long for you
-for line in lines[:501]:
+for line in lines[:1000]:
     # Input and target sentences are separated by tabs
     input_doc, target_doc = line.split('\t')[:2]
     # Appending each input sentence to input_docs
@@ -85,6 +86,9 @@ for line, (input_doc, target_doc) in enumerate(zip(input_docs, target_docs)):
         decoder_input_data[line, timestep, target_features_dict[token]] = 1.
         if timestep > 0:
 
-        decoder_target_data[line, timestep - 1, target_features_dict[token]] = 1.
+            decoder_target_data[line, timestep - 1, target_features_dict[token]] = 1.
 
 # print out those value here:
+print(list(input_features_dict.keys())[:50])
+print(reverse_target_features_dict[50])
+print(len(input_tokens))
